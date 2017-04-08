@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- 
+
 	<meta charset="UTF-8">
 	<meta http-equiv="Access-Control-Allow-Origin" content="*">
 	<title>Calculadora de Bitcoins</title>
@@ -9,6 +9,17 @@
 	<link rel="stylesheet" href="https://daneden.github.io/animate.css/animate.min.css">
 </head>
 <body>
+<?
+       $ch = curl_init();
+    
+
+      // Use curl to get current prices and 15 minute averages for all currencies from Blockchain.info's exchange rates API
+      curl_setopt($ch, CURLOPT_URL, "https://blockchain.info/ticker");
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      $prices = json_decode(curl_exec($ch), true);
+      curl_close($ch);
+      
+    ?>
 <style>
 ::selection {background: #fff2a8;}::-moz-selection {background: #fff2a8;}
 .form-control:focus{    border-color: #FFEB3B;box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px rgba(255, 193, 7, 0.55);}
@@ -85,7 +96,7 @@
 		<span class="input-group-addon" id="sizing-addon1">de Bitcoins </span>
 	</div><br>
 	<button class="btn btn-danger btn-lg btn-outline" id="btnVolverQueComprar"><i class="glyphicon glyphicon-circle-arrow-left"></i> Volver</button>
-	<button class="btn btn-warning btn-outline btn-lg btnProcesarCompraDolares" id=""><i class="glyphicon glyphicon-circle-arrow-right"></i> Procesar montos</button>
+	<button class="btn btn-warning btn-outline btn-lg btnProcesarCompraDolares" id=""><i class="glyphicon glyphicon-circle-arrow-right"></i> Calcular pagos</button>
 </div>
 <!-- <div class="row hidden" id="divPrimerDiv3">
 	<h3>Ingrese su monto <br><small>Debe ingresar la cantidad en dólares que desea comprar.</small></h3>
@@ -115,7 +126,7 @@
 <div class="col-sm-4 text-center text-primary" >
 <h3 class="">Precio del Bitcoin Referencial</h3>
 
-	<span>$ <h3 style="display: inline;"><span>1195</span></h3> USD</span><br>
+	<span>$ <h3 style="display: inline;"><span><?php echo $prices['USD']['last']; ?></span></h3> USD</span><br>
 	<small class="text-muted">Los precios se actualizan cada 15 minutos.</small>
 	
 	<br><br>
@@ -132,10 +143,13 @@
   crossorigin="anonymous"></script>
 <script>
 $(document).ready(function () {
-	$.ajax({url:'https://blockchain.info/es/ticker', type: 'POST'}).done(function (resp) {
-		console.log(resp)
-	})
-	
+	// $.ajax({url:'https://blockchain.info/es/ticker', type: 'POST',
+	// crossDomain: true,dataType: 'jsonp'
+	// }).done(function (resp) {
+	// 	console.log(resp)
+	// })
+	$.PrecioDolar=3.26;
+	$.PrecioBitcoin= <?php echo $prices['USD']['last']; ?>
 	
 })
 $('#btnComprarDolares').click(function () { 
@@ -172,15 +186,36 @@ $('#btnVolverQueComprar').click(function () {
 		$('#divPrimerDiv').removeClass('hidden');
 	});
 });
-$('input').keyup(function () {
+$('#txtCompraXDolares').keyup(function () {
 	if($(this).val()!=''){
 		var valor = $(this).val();
 	//console.log('valor '+ valor);
 	$('input').val('');
 	$(this).val(valor);
+	$('#txtCompraXSoles').val( parseFloat(valor * $.PrecioDolar).toFixed(2));
+	$('#txtCompraXBitcoin').val( parseFloat(valor/$.PrecioBitcoin ).toFixed(4));
+
 	}
 });
-$('input').focusout(function () {
+$('#txtCompraXSoles').keyup(function () {
+	if($(this).val()!=''){
+		var valor = $(this).val();
+	//console.log('valor '+ valor);
+	$('input').val('');
+	$(this).val(valor);
+	$('#txtCompraXDolares').val( parseFloat(valor / $.PrecioDolar).toFixed(2));
+	$('#txtCompraXBitcoin').val( parseFloat(valor/$.PrecioDolar/$.PrecioBitcoin ).toFixed(4));
+
+	}
+});
+$('#txtCompraXSoles').focusout(function () {
+	if($(this).val()==''){
+		$(this).val('');
+	}else{
+		$(this).val( parseFloat($(this).val()).toFixed(2) );
+	}
+});
+$('#txtCompraXDolares').focusout(function () {
 	if($(this).val()==''){
 		$(this).val('');
 	}else{
