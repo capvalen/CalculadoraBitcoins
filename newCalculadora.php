@@ -120,6 +120,7 @@
 			</div>
 		</div>
 	</div>
+	<button class="btn btn-danger btn-lg btn-outline" id="btnVolverAEmpezar"><i class="glyphicon glyphicon-circle-arrow-left"></i> Comenzar de nuevo</button>
 </div>
 </div>
 
@@ -186,6 +187,12 @@ $('#btnVolverQueComprar').click(function () {
 		$('#divPrimerDiv').removeClass('hidden');
 	});
 });
+$('#btnVolverAEmpezar').click(function () {
+	$('#divPrimerDiv4').addClass('animated fadeOutUp').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+		$(this).addClass('hidden').removeClass('animated fadeOutUp');
+		$('#divPrimerDiv').removeClass('hidden');
+	});
+});
 $('#txtCompraXDolares').keyup(function () {
 	if($(this).val()!=''){
 		var valor = $(this).val();
@@ -208,6 +215,18 @@ $('#txtCompraXSoles').keyup(function () {
 
 	}
 });
+$('#txtCompraXBitcoin').keyup(function () {
+	if($(this).val()!=''){
+		var valor = $(this).val();
+	//console.log('valor '+ valor);
+	$('input').val('');
+	$(this).val(valor);
+	$('#txtCompraXDolares').val(g );
+	$('#txtCompraXSoles').val( parseFloat(valor/$.PrecioDolar/$.PrecioBitcoin ).toFixed(4));
+
+	}
+});
+
 $('#txtCompraXSoles').focusout(function () {
 	if($(this).val()==''){
 		$(this).val('');
