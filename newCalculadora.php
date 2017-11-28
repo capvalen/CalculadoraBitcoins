@@ -70,13 +70,120 @@
 	
 	
 </div>
-<div class="row">
-	<div class="text-center col-sm-8">
-	<div class="row" id="divPrimerDiv">
-	<h3>¿Qué desea hacer?</h3>
-	<button class="btn btn-morado btn-lg" id="btnComprarDolares"><i class="glyphicon glyphicon-record"></i> Quiero comprar bitcoins</button><br><br>
-	<button class="btn btn-morado btn-lg"><i class="glyphicon glyphicon-record"></i> Quiero vender bitcoins</button><br><br>
+<div class="col-xs-12">
+	<div class="panel with-nav-tabs hidden-print">
+	<div class="panel-heading">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#tabVentaMonedas" data-toggle="tab" id="aHrefVenta"> Venta</a></li>
+			<li><a href="#tabCompraMonedas" data-toggle="tab" id="aHrefCompra"> Compra</a></li>
+		</ul>
+	</div>
+	<div class="panel-body">
+		<div class="tab-content container-fluid">
+			<div class="tab-pane fade in active " id="tabVentaMonedas">
+				<div class="row ">
+					<div class="col-xs-12 col-sm-4">
+						<input type="number" class="form-control" id="txtIngresoCantidad" placeholder="Ingrese cantidad para convertir">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-4" id="divComboVentaMoneda">
+						<div id="divSelectGrupoProListado">
+							<select class="form-control" title="CriptoMonedas..." id="optMonedas" data-width="100%" data-live-search="true" "="">
+								<option value="">Seleccione moneda</option>
+								<option value="bitcoin">Bitcoin</option>
+								<option value="bitshares">Bitshares</option>
+								<option value="dash">Dash</option>
+								<option value="ethereum">Ethereum</option>
+								<option value="ethereum-classic">Ethereum-Classic</option>
+								<option value="iota">Iota</option>
+								<option value="list">Lisk</option>
+								<option value="litecoin">Litecoin</option>
+								<option value="monero">Monero</option>
+								<option value="nem">Nem</option>
+								<option value="neo">Neo</option>
+								<option value="omisego">Omisego</option>
+								<option value="ripple">Ripple</option>
+								<option value="stratis">Stratis</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-1">
+						<button class="btn btn-primary btn-lg cripto" id="btnCambiarEstadoVenta"><span class="glyphicon glyphicon-transfer"></span></button>
+					</div>
+					<div class="col-xs-12 col-sm-4" id="divComboVentaSoles">
+						<select class="form-control" title="Moneda..." data-width="100%" data-live-search="true" "="">
+							<option>Soles</option>
+						</select>
+					</div>
+				</div>
+				<div class="row" id="rowResultadosDatosCalculadora">
+					<div class="col-xs-12 col-sm-4 text-right" id="divLblMoneda">
+						<span id="spanResVenta"></span>
+					</div>
+					<div class="col-xs-1 text-center">=</div>
+					<div class="col-xs-12 col-sm-4 text-left" id="divLblSoles">
+						<span><strong><span id="spanResVentaSoles"></span></strong> Soles</span>
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="tab-pane fade" id="tabCompraMonedas">
+				<div class="row ">
+					<div class="col-xs-12 col-sm-4">
+						<input type="number" class="form-control" id="txtIngresoCantidadCompra" placeholder="Ingrese cantidad para convertir">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-4" id="divComboCompraMoneda">
+						<div id="divSelectGrupoProListado">
+							<select class="form-control" title="CriptoMonedas..." id="optMonedasCompra" data-width="100%" data-live-search="true" "="">
+								<option value="">Seleccione moneda</option>
+								<option value="bitcoin">Bitcoin</option>
+								<option value="bitshares">Bitshares</option>
+								<option value="dash">Dash</option>
+								<option value="ethereum">Ethereum</option>
+								<option value="ethereum-classic">Ethereum-Classic</option>
+								<option value="iota">Iota</option>
+								<option value="list">Lisk</option>
+								<option value="litecoin">Litecoin</option>
+								<option value="monero">Monero</option>
+								<option value="nem">Nem</option>
+								<option value="neo">Neo</option>
+								<option value="omisego">Omisego</option>
+								<option value="ripple">Ripple</option>
+								<option value="stratis">Stratis</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-1">
+						<button class="btn btn-primary btn-lg cripto" id="btnCambiarEstadoCompra"><span class="glyphicon glyphicon-transfer"></span></button>
+					</div>
+					<div class="col-xs-12 col-sm-4" id="divComboCompraSoles">
+						<select class="form-control" title="Moneda..." data-width="100%" data-live-search="true" "="">
+							<option>Soles</option>
+						</select>
+					</div>
+				</div>
+				<div class="row" id="rowResultadosDatosCalculadora">
+					<div class="col-xs-12 col-sm-4 text-right" id="divLblMonedaCompra">
+						<span id="spanResCompra"></span>
+					</div>
+					<div class="col-xs-1 text-center">=</div>
+					<div class="col-xs-12 col-sm-4 text-left" id="divLblSolesCompra">
+						<span><strong><span id="spanResCompraSoles"></span></strong> Soles</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
 </div>
+					
+					<p class="description">Aquí puedes crear el contenido que se usará dentro del módulo.</p>
 <div class="row hidden" id="divCompraBitcoins">
 	<h3>¿Qué cantidad desea comprar?</h3>
 	<p>Quiero:</p>
