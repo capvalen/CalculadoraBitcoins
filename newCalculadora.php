@@ -205,6 +205,8 @@
 
 jQuery(document).ready(function($) {
 $.precioDolar=3.27;
+$.comisionVenta=1.25;
+$.comisionCompra=1.15;
 //console.log('imprimir algo');
 $.JsonMonedas=[];
 /* Captura de valores */   
@@ -225,129 +227,128 @@ $.get( "https://api.coinmarketcap.com/v1/ticker/", function(data){
            PreOriEtherClasic, PreSolEtherClasic, PreOriEtherClasicCom, PreSolEtherClasicCom,
            PreOriBcash, PreSolBcash, PreOriBcashCom, PreSolBcashCom;
 	$.chata=data;
-    
-  $.map(data,function(moneda, i){
+    $.map(data,function(moneda, i){
    // console.log(moneda);
 
     if(moneda.id=='bitcoin'){
       PreOriBtc =moneda.price_usd;
-      PreSolBtc = PreOriBtc*+$.precioDolar*1.25;
+      PreSolBtc = PreOriBtc*+$.precioDolar*$.comisionVenta;
 
       PreOriBtcCom =moneda.price_usd;
-      PreSolBtcCom = (PreOriBtcCom/1.15)*$.precioDolar;
+      PreSolBtcCom = (PreOriBtcCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'bitcoin', 'venta': PreSolBtc, 'compra': PreSolBtcCom , simbolo: 'BTC'});
     }
     if(moneda.id=='ethereum'){
       PreOriEth =moneda.price_usd;
-      PreSolEth = PreOriEth*$.precioDolar*1.25;
+      PreSolEth = PreOriEth*$.precioDolar*$.comisionVenta;
 
       PreOriEthCom =moneda.price_usd;
-      PreSolEthCom = (PreOriEthCom/1.15)*$.precioDolar;
+      PreSolEthCom = (PreOriEthCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'ethereum', 'venta': PreSolEth, 'compra': PreSolEthCom, simbolo: 'ETH' });
     }
     if(moneda.id=='ripple'){
       PreOriRip =moneda.price_usd;
-      PreSolRip = PreOriRip*$.precioDolar*1.25;
+      PreSolRip = PreOriRip*$.precioDolar*$.comisionVenta;
 
       PreOriRipCom =moneda.price_usd;
-      PreSolRipCom = (PreOriRipCom/1.15)*$.precioDolar;
+      PreSolRipCom = (PreOriRipCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'ripple', 'venta': PreSolRip, 'compra': PreSolRipCom, simbolo: 'XRP' });
     }
     if(moneda.id=='nem'){
       PreOriNem =moneda.price_usd;
-      PreSolNem = PreOriNem*$.precioDolar*1.25;
+      PreSolNem = PreOriNem*$.precioDolar*$.comisionVenta;
 
       PreOriNemCom =moneda.price_usd;
-      PreSolNemCom = (PreOriNemCom/1.15)*$.precioDolar;
+      PreSolNemCom = (PreOriNemCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'nem', 'venta': PreSolNem, 'compra': PreSolNemCom, simbolo: 'XEM' });
     }
     if(moneda.id=='litecoin'){
       PreOriLit =moneda.price_usd;
-      PreSolLit = PreOriLit*$.precioDolar*1.25;
+      PreSolLit = PreOriLit*$.precioDolar*$.comisionVenta;
 
       PreOriLitCom =moneda.price_usd;
-      PreSolLitCom = (PreOriLitCom/1.15)*$.precioDolar;
+      PreSolLitCom = (PreOriLitCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'litecoin', 'venta': PreSolLit, 'compra': PreSolLitCom, simbolo: 'LTC' });
     }
     if(moneda.id=='iota'){
       PreOriIot =moneda.price_usd;
-      PreSolIot = PreOriIot*$.precioDolar*1.25;
+      PreSolIot = PreOriIot*$.precioDolar*$.comisionVenta;
 
       PreOriIotCom =moneda.price_usd;
-      PreSolIotCom = (PreOriIotCom/1.15)*$.precioDolar;
+      PreSolIotCom = (PreOriIotCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'iota', 'venta': PreSolIot, 'compra': PreSolIotCom, simbolo: 'MIOTA' });
     }
     if(moneda.id=='dash'){
       PreOriDash =moneda.price_usd;
-      PreSolDash = PreOriDash*$.precioDolar*1.25;
+      PreSolDash = PreOriDash*$.precioDolar*$.comisionVenta;
 
       PreOriDashCom =moneda.price_usd;
-      PreSolDashCom = (PreOriDashCom/1.15)*$.precioDolar;
+      PreSolDashCom = (PreOriDashCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'dash', 'venta': PreSolDash, 'compra': PreSolDashCom, simbolo: 'DASH' });
     }
     if(moneda.id=='bitshares'){
       PreOriBts =moneda.price_usd;
-      PreSolBts = PreOriBts*$.precioDolar*1.25;
+      PreSolBts = PreOriBts*$.precioDolar*$.comisionVenta;
 
       PreOriBtsCom =moneda.price_usd;
-      PreSolBtsCom = (PreOriBtsCom/1.15)*$.precioDolar;
+      PreSolBtsCom = (PreOriBtsCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'bitshares', 'venta': PreSolBts, 'compra': PreSolBtsCom, simbolo: 'BTS' });
     }
     if(moneda.id=='stratis'){
       PreOriStr =moneda.price_usd;
-      PreSolStr = PreOriStr*$.precioDolar*1.25;
+      PreSolStr = PreOriStr*$.precioDolar*$.comisionVenta;
 
       PreOriStrCom =moneda.price_usd;
-      PreSolStrCom = (PreOriStrCom/1.15)*$.precioDolar;
+      PreSolStrCom = (PreOriStrCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'stratis', 'venta': PreSolStr, 'compra': PreSolStrCom, simbolo: 'STRAT' });
     }
     if(moneda.id=='monero'){
       PreOriMonero =moneda.price_usd;
-      PreSolMonero = PreOriMonero*$.precioDolar*1.25;
+      PreSolMonero = PreOriMonero*$.precioDolar*$.comisionVenta;
 
       PreOriMoneroCom =moneda.price_usd;
-      PreSolMoneroCom = (PreOriMoneroCom/1.15)*$.precioDolar;
+      PreSolMoneroCom = (PreOriMoneroCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'monero', 'venta': PreSolMonero, 'compra': PreSolMoneroCom, simbolo: 'XMR' });
     }
     if(moneda.id=='neo'){
       PreOriNeo =moneda.price_usd;
-      PreSolNeo = PreOriNeo*$.precioDolar*1.25;
+      PreSolNeo = PreOriNeo*$.precioDolar*$.comisionVenta;
 
       PreOriNeoCom =moneda.price_usd;
-      PreSolNeoCom = (PreOriNeoCom/1.15)*$.precioDolar;
+      PreSolNeoCom = (PreOriNeoCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'neo', 'venta': PreSolNeo, 'compra': PreSolNeoCom, simbolo: 'NEO' });
     }
     if(moneda.id=='omisego'){
       PreOriOmisego =moneda.price_usd;
-      PreSolOmisego = PreOriOmisego*$.precioDolar*1.25;
+      PreSolOmisego = PreOriOmisego*$.precioDolar*$.comisionVenta;
 
       PreOriOmisegoCom =moneda.price_usd;
-      PreSolOmisegoCom = (PreOriOmisegoCom/1.15)*$.precioDolar;
+      PreSolOmisegoCom = (PreOriOmisegoCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'omisego', 'venta': PreSolOmisego, 'compra': PreSolOmisegoCom, simbolo: 'OMG' });
     }
     if(moneda.id=='lisk'){
       PreOriLisk =moneda.price_usd;
-      PreSolLisk = PreOriLisk*$.precioDolar*1.25;
+      PreSolLisk = PreOriLisk*$.precioDolar*$.comisionVenta;
 
       PreOriLiskCom =moneda.price_usd;
-      PreSolLiskCom = (PreOriLiskCom/1.15)*$.precioDolar;
+      PreSolLiskCom = (PreOriLiskCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'lisk', 'venta': PreSolLisk, 'compra': PreSolLiskCom, simbolo: 'LSK' });
     }
     if(moneda.id=='ethereum-classic'){
       PreOriEtherClasic =moneda.price_usd;
-      PreSolEtherClasic = PreOriEtherClasic*$.precioDolar*1.25;
+      PreSolEtherClasic = PreOriEtherClasic*$.precioDolar*$.comisionVenta;
 
       PreOriEtherClasicCom =moneda.price_usd;
-      PreSolEtherClasicCom = (PreOriEtherClasicCom/1.15)*$.precioDolar;
+      PreSolEtherClasicCom = (PreOriEtherClasicCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'ethereum-classic', 'venta': PreSolEtherClasic, 'compra': PreSolEtherClasicCom, simbolo: 'ETC' });
     }
 
     if(moneda.id=='bitcoin-cash'){
       PreOriBcash =moneda.price_usd;
-      PreSolBcash = PreOriBcash*+$.precioDolar*1.25;
+      PreSolBcash = PreOriBcash*+$.precioDolar*$.comisionVenta;
 
       PreOriBcashCom =moneda.price_usd;
-      PreSolBcashCom = (PreOriBcashCom/1.15)*$.precioDolar;
+      PreSolBcashCom = (PreOriBcashCom/$.comisionCompra)*$.precioDolar;
       $.JsonMonedas.push({'moneda':'bitcoin-cash', 'venta': PreSolBcash, 'compra': PreSolBcashCom , simbolo: 'BCH'});
     }
 
@@ -464,6 +465,7 @@ $('.dropdown').click( function(){
   
 function valorMoneda(queMoneda){
   var valorAct;
+  console.log($.JsonMonedas)
   $.map($.chata,function(moneda, i){
     if(moneda.id==queMoneda){ //console.log(moneda);
        valorAct=moneda.price_usd;
@@ -601,7 +603,7 @@ function cambioMonedaOptYSoles(esCompra) {
 	}else{
 		//calcular en base a soles
 		for (var u = 0; u < $.JsonMonedas.length; u++) {
-		if( $.JsonMonedas[u].moneda== moneda ){
+		if( $.JsonMonedas[u].moneda== moneda ){ console.log($.JsonMonedas[u])
 			precioVenta= parseFloat(cantidad/$.JsonMonedas[u].venta).toFixed(4) +' <span class="mayuscula">'+$.JsonMonedas[u].moneda+'</span> ('+  $.JsonMonedas[u].simbolo+')';
 			precioCompra= parseFloat(cantidad/$.JsonMonedas[u].compra).toFixed(4) +' <span class="mayuscula">'+$.JsonMonedas[u].moneda+'</span> ('+  $.JsonMonedas[u].simbolo+')';
 			}
@@ -643,3 +645,4 @@ $('#btnCambiarEstadoCompra').click(function () {
 </script>
 </body>
 </html>
+  
