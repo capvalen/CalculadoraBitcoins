@@ -3,9 +3,9 @@
 	<div style="width: 49%;display: inline-block; background-color: #fff; padding-top: 3px; padding-left: 10px; padding-bottom: 16px; ">
 		<div class="contenedorInputs" >
 		<span style="font-size: 12px;">Tu envías</span><br>
-		<input type="number" min="0" id="campoArriba" style="width: 100%; font-size: 20pt;color: #1e3150;font-weight: 700;">
+		<input type="number" lang="en-150" min="0" step="0.01" id="campoArriba" style="width: 100%; font-size: 20pt;color: #1e3150;font-weight: 700;">
 		<span style="font-size: 12px;">Tu recibes</span><br>
-		<input type="number" min="0" id="campoAbajo" style="width: 100%; font-size: 20pt;color: #1e3150;font-weight: 700;">
+		<input type="number" lang="en-150" min="0" step="0.01" id="campoAbajo" style="width: 100%; font-size: 20pt;color: #1e3150;font-weight: 700;">
 	</div>
 	</div>
 	<div class="contenedorLabels" style="width: 49%;display: inline-block;margin-left: -3px;">
@@ -40,19 +40,17 @@ background-color: #fff;position: absolute; right: 1.8rem; margin-top: -20px;
 .contenedorInputs input[type=number]::-webkit-outer-spin-button,
 .contenedorInputs input[type=number]::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;} 
 .contenedorInputs input[type=number] {-moz-appearance:textfield;}
+.contenedorInputs input[type=number]:invalid { box-shadow:none; }
 </style>
 
 <script>
 jQuery(document).ready(function($) {
-	$.precioDolar=3.27;
-	/*Si es menor a 350 soles = 35%.. menor a 1500 soles = 25%... mas de 3200 soles =17%
-	$.comisionVenta=1.25;
-	$.comisionCompra=1.15;*/
-
+	$.precioDolar=0;
 	$.JsonMonedas=[];
 	/* Captura de valores */
 	$.get('https://www.deperu.com/api/rest/cotizaciondolar.json', function(dato){
 		$.JsonMonedas.push({'moneda':'dolares', 'compra': dato['Cotizacion'][0].Compra, 'venta': dato['Cotizacion'][0].Venta , simbolo: 'DOL'});
+		$.precioDolar= parseFloat( dato['Cotizacion'][0].Venta )*1.02;
 	});
 	$.get( "https://api.coinmarketcap.com/v1/ticker/", function(data){
 		   var PreOriBtc, PreSolBtc, PreOriBtcCom, PreSolBtcCom,
@@ -76,93 +74,92 @@ jQuery(document).ready(function($) {
 
 		if(moneda.id=='bitcoin'){
 		  PreOriBtc =moneda.price_usd;
-		  PreSolBtc = PreOriBtc*+$.precioDolar;
-
+		  PreSolBtc = PreOriBtc;
 		 
 		  $.JsonMonedas.push({'moneda':'bitcoin', 'precioSol': PreSolBtc, 'precioDol': PreOriBtc , simbolo: 'BTC'});
 		}
 		if(moneda.id=='ethereum'){
 		  PreOriEth =moneda.price_usd;
-		  PreSolEth = PreOriEth*$.precioDolar;
+		  PreSolEth = PreOriEth;
 
 		  $.JsonMonedas.push({'moneda':'ethereum', 'precioSol': PreSolEth, 'precioDol': PreOriEth, simbolo: 'ETH' });
 		}
 		if(moneda.id=='ripple'){
 		  PreOriRip =moneda.price_usd;
-		  PreSolRip = PreOriRip*$.precioDolar;
+		  PreSolRip = PreOriRip;
 
 		  $.JsonMonedas.push({'moneda':'ripple', 'precioSol': PreSolRip, 'precioDol': PreOriRip, simbolo: 'XRP' });
 		}
 		if(moneda.id=='nem'){
 		  PreOriNem =moneda.price_usd;
-		  PreSolNem = PreOriNem*$.precioDolar;
+		  PreSolNem = PreOriNem;
 
 		  $.JsonMonedas.push({'moneda':'nem', 'precioSol': PreSolNem, 'precioDol': PreOriNem, simbolo: 'XEM' });
 		}
 		if(moneda.id=='litecoin'){
 		  PreOriLit =moneda.price_usd;
-		  PreSolLit = PreOriLit*$.precioDolar;
+		  PreSolLit = PreOriLit;
 
 		  $.JsonMonedas.push({'moneda':'litecoin', 'precioSol': PreSolLit, 'precioDol': PreOriLit, simbolo: 'LTC' });
 		}
 		if(moneda.id=='iota'){
 		  PreOriIot =moneda.price_usd;
-		  PreSolIot = PreOriIot*$.precioDolar;
+		  PreSolIot = PreOriIot;
 
 		  $.JsonMonedas.push({'moneda':'iota', 'precioSol': PreSolIot, 'precioDol': PreOriIot, simbolo: 'MIOTA' });
 		}
 		if(moneda.id=='dash'){
 		  PreOriDash =moneda.price_usd;
-		  PreSolDash = PreOriDash*$.precioDolar;
+		  PreSolDash = PreOriDash;
 
 		  $.JsonMonedas.push({'moneda':'dash', 'precioSol': PreSolDash, 'precioDol': PreOriDash, simbolo: 'DASH' });
 		}
 		if(moneda.id=='bitshares'){
 		  PreOriBts =moneda.price_usd;
-		  PreSolBts = PreOriBts*$.precioDolar;
+		  PreSolBts = PreOriBts;
 
 		  $.JsonMonedas.push({'moneda':'bitshares', 'precioSol': PreSolBts, 'precioDol': PreOriBts, simbolo: 'BTS' });
 		}
 		if(moneda.id=='stratis'){
 		  PreOriStr =moneda.price_usd;
-		  PreSolStr = PreOriStr*$.precioDolar;
+		  PreSolStr = PreOriStr;
 
 		  $.JsonMonedas.push({'moneda':'stratis', 'precioSol': PreSolStr, 'precioDol': PreOriStr, simbolo: 'STRAT' });
 		}
 		if(moneda.id=='monero'){
 		  PreOriMonero =moneda.price_usd;
-		  PreSolMonero = PreOriMonero*$.precioDolar;
+		  PreSolMonero = PreOriMonero;
 
 		  $.JsonMonedas.push({'moneda':'monero', 'precioSol': PreSolMonero, 'precioDol': PreOriMonero, simbolo: 'XMR' });
 		}
 		if(moneda.id=='neo'){
 		  PreOriNeo =moneda.price_usd;
-		  PreSolNeo = PreOriNeo*$.precioDolar;
+		  PreSolNeo = PreOriNeo;
 
 		  $.JsonMonedas.push({'moneda':'neo', 'precioSol': PreSolNeo, 'precioDol': PreOriNeo, simbolo: 'NEO' });
 		}
 		if(moneda.id=='omisego'){
 		  PreOriOmisego =moneda.price_usd;
-		  PreSolOmisego = PreOriOmisego*$.precioDolar;
+		  PreSolOmisego = PreOriOmisego;
 
 		  $.JsonMonedas.push({'moneda':'omisego', 'precioSol': PreSolOmisego, 'precioDol': PreOriOmisego, simbolo: 'OMG' });
 		}
 		if(moneda.id=='lisk'){
 		  PreOriLisk =moneda.price_usd;
-		  PreSolLisk = PreOriLisk*$.precioDolar;
+		  PreSolLisk = PreOriLisk;
 
 		  $.JsonMonedas.push({'moneda':'lisk', 'precioSol': PreSolLisk, 'precioDol': PreOriLisk, simbolo: 'LSK' });
 		}
 		if(moneda.id=='ethereum-classic'){
 		  PreOriEtherClasic =moneda.price_usd;
-		  PreSolEtherClasic = PreOriEtherClasic*$.precioDolar;
+		  PreSolEtherClasic = PreOriEtherClasic;
 
 		  $.JsonMonedas.push({'moneda':'ethereum-classic', 'precioSol': PreSolEtherClasic, 'precioDol': PreOriEtherClasic, simbolo: 'ETC' });
 		}
 
 		if(moneda.id=='bitcoin-cash'){
 		  PreOriBcash =moneda.price_usd;
-		  PreSolBcash = PreOriBcash*+$.precioDolar;
+		  PreSolBcash = PreOriBcash;
 
 		  $.JsonMonedas.push({'moneda':'bitcoin-cash', 'precioSol': PreSolBcash, 'precioDol': PreOriBcash , simbolo: 'BCH'});
 		}
@@ -178,90 +175,124 @@ jQuery(document).ready(function($) {
 		var valorAct;
 	  	$.map($.JsonMonedas, function(moneda, i){
 		if($.JsonMonedas[i].moneda==queMoneda){ //console.log(moneda);
-		   valorAct=$.JsonMonedas[i].precioSol;
+		   valorAct=$.JsonMonedas[i].precioSol*$.precioDolar;
 			return false; 
 		}
 	  });
 	  return valorAct;
 	}
-	function evaluarQueEstado(queLado) { console.log('fisico '+$('#btnCambiar').hasClass('fisico')); console.log('lado '+queLado);
+	function valorDolar(esCompra){
+		var valorAct;
+	  	$.map($.JsonMonedas, function(moneda, i){
+		if($.JsonMonedas[i].moneda=='dolares'){ //console.log(moneda);
+			if(esCompra){
+				valorAct=$.JsonMonedas[i].compra;
+				return false; 
+			}else{
+				valorAct=$.JsonMonedas[i].venta;
+				return false; 
+			}
+		}
+	  });
+	  return valorAct;
+	}
+	function evaluarQueEstado(queLado) { 
 		if( $('#btnCambiar').hasClass('fisico') ){ //Arriba estan las monedas fisicas
 			calculoArriba(queLado);
 		}else{ //monedas digitales
 			calculoAbajo(queLado);
 		}
 	}
-	function calculoAbajo(queLado) {
-		var cantidad=0; var comision=0;var cantidad=0, respu=0;
-		//console.log($.isNumeric($('#campoArriba').val()))
-		if( $.isNumeric($('#campoArriba').val()) ){cantidad=parseFloat($('#campoArriba').val());}
-		var precioMoneda=0;
-		if( $('#selectCriptoMonedas').val()!='dolares'){
-			precioMoneda=valorMoneda($('#selectCriptoMonedas').val());
-		}else{
-			precioMoneda=$.JsonMonedas[0].venta;
-			comision=1.0112;
-		}
-		if(cantidad>=3200){ comision=1.17; }
-		if(cantidad>=1500 && cantidad<3200){ comision=1.20; }
-		if(cantidad>=350 && cantidad<1500){ comision=1.25; }
-		if(cantidad>0 && cantidad<350){ comision=1.35; }
-		precioMonedaVenta=precioMoneda*comision;
-		var precioMonedaCompra=precioMonedaVenta/comision;
-		
-		if(queLado){
-			cantidad=$('#campoArriba').val();
-			respu=precioMonedaCompra*cantidad;
-			$('#campoAbajo').val(parseFloat(respu).toFixed(6));
-		}else{
-			cantidad=$('#campoAbajo').val();
-			respu=cantidad/precioMonedaCompra;
-			$('#campoAbajo').val(parseFloat(respu).toFixed(2));
-		}
-		$('#spanMonedaLtr').text($('#selectCriptoMonedas').val());
-		$('#spanPrecioCompraPub').text('S/. '+ parseFloat(precioMonedaCompra).toFixed(2));
-		$('#spanPrecioVentaPub').text('S/. '+ parseFloat(precioMonedaVenta).toFixed(2));
-		
-		$('#spanTipCambio').text(parseFloat(precioMonedaCompra).toFixed(2));
-	}
+	
 	function calculoArriba(queLado) { 
 		// 1° coger que moneda es
 		var cantidad=0; var comision=0;var cantidad=0, respu=0;
 		if( $.isNumeric($('#campoArriba').val()) ){cantidad=parseFloat($('#campoArriba').val());}
 		var precioMoneda=0;
-		if( $('#selectCriptoMonedas').val()!='dolares'){
+		if( $('#selectCriptoMonedas').val()=='bitcoin'){
 			precioMoneda=valorMoneda($('#selectCriptoMonedas').val());
-		}else{
-			precioMoneda=$.JsonMonedas[0].compra;
-			comision=1.0112;
+			comision=1.17;
 		}
-		if(cantidad>=3200){ comision=1.17; }
-		if(cantidad>=1500 && cantidad<3200){ comision=1.20; }
-		if(cantidad>=350 && cantidad<1500){ comision=1.25; }
-		if(cantidad>0 && cantidad<350){ comision=1.35; }
+		else if(  $('#selectCriptoMonedas').val()=='dolares' ){
+			precioMoneda=valorDolar(true);
+			comision=1.02;
+		}
+		else{
+			precioMoneda=valorMoneda($('#selectCriptoMonedas').val());
+			comision=1.25;
+		}
+		
 		precioMonedaVenta=precioMoneda*comision;
 		var precioMonedaCompra=precioMoneda/comision;
 		
 		if(queLado){
 			cantidad=$('#campoArriba').val();
-			respu=cantidad/precioMonedaVenta;
-			$('#campoAbajo').val(parseFloat(respu).toFixed(6));
+			respu=parseFloat(cantidad/precioMonedaVenta);
+			if( $('#selectCriptoMonedas').val()=='dolares' ){
+				$('#campoAbajo').val(parseFloat(respu).toFixed(2));
+			}else{
+				$('#campoAbajo').val(parseFloat(respu).toFixed(6));
+			}
+
 		}else{
 			cantidad=$('#campoAbajo').val();
-			respu=cantidad*precioMonedaVenta;
+			respu=parseFloat(cantidad*precioMonedaVenta);
+			if( $('#selectCriptoMonedas').val()=='dolares' ){
+				$('#campoArriba').val(parseFloat(respu).toFixed(2));
+			}else{
+				$('#campoArriba').val(parseFloat(respu).toFixed(2));
+			}
+		}
+
+		$('#spanMonedaLtr').text($('#selectCriptoMonedas').val());
+		$('#spanPrecioVentaPub').text('S/. '+ parseFloat(precioMonedaVenta).toFixed(3));
+		$('#spanPrecioCompraPub').text('S/. '+ parseFloat(precioMonedaCompra).toFixed(3));
+		$('#spanTipCambio').text(parseFloat(precioMonedaVenta).toFixed(3));
+		
+	}
+	function calculoAbajo(queLado) { //console.log('fisico '+$('#btnCambiar').hasClass('fisico')); console.log('lado '+queLado);
+		var cantidad=0; var comision=0;var cantidad=0, respu=0;
+		//console.log($.isNumeric($('#campoArriba').val()))
+		if( $.isNumeric($('#campoArriba').val()) ){cantidad=parseFloat($('#campoArriba').val());}
+		var precioMoneda=0;
+		if( $('#selectCriptoMonedas').val()=='bitcoin'){
+			precioMoneda=valorMoneda($('#selectCriptoMonedas').val());
+			comision=1.17;
+		}
+		else if(  $('#selectCriptoMonedas').val()=='dolares' ){
+			precioMoneda=valorDolar(false);
+			comision=1.02;
+		}
+		else{
+			precioMoneda=valorMoneda($('#selectCriptoMonedas').val());
+			comision=1.25;
+		}
+		
+		precioMonedaVenta=precioMoneda*comision;
+		var precioMonedaCompra=precioMonedaVenta/comision;
+		//console.log('la comi' + comision);
+		if(queLado){
+			cantidad=$('#campoArriba').val();
+			if( $('#selectCriptoMonedas').val()=='dolares' ){
+				respu=parseFloat(precioMonedaCompra/cantidad);
+			}else{
+				respu=parseFloat(precioMonedaCompra*cantidad);
+			}
+
+			$('#campoAbajo').val(parseFloat(respu).toFixed(2));
+		}else{
+			cantidad=$('#campoAbajo').val();
+			if( $('#selectCriptoMonedas').val()=='dolares' ){
+				respu=parseFloat(precioMonedaCompra/cantidad);
+			}else{
+				respu=parseFloat(precioMonedaCompra*cantidad);
+			}
 			$('#campoArriba').val(parseFloat(respu).toFixed(2));
 		}
 		$('#spanMonedaLtr').text($('#selectCriptoMonedas').val());
-		$('#spanPrecioVentaPub').text('S/. '+ parseFloat(precioMonedaVenta).toFixed(2));
-
-		if( $('#selectCriptoMonedas').val()!='dolares'){
-			$('#spanPrecioCompraPub').text('S/. '+ parseFloat(precioMonedaCompra).toFixed(2));
-			$('#spanTipCambio').text(parseFloat(precioMonedaVenta).toFixed(2));}
-		else{
-			$('#spanPrecioCompraPub').text('S/. '+ parseFloat(precioMonedaCompra).toFixed(3));
-			$('#spanTipCambio').text(parseFloat(precioMonedaVenta).toFixed(3));
-		}
-		
+		$('#spanPrecioCompraPub').text('S/. '+ parseFloat(precioMonedaCompra).toFixed(3));
+		$('#spanPrecioVentaPub').text('S/. '+ parseFloat(precioMonedaVenta).toFixed(3));
+		$('#spanTipCambio').text(parseFloat(precioMonedaCompra).toFixed(3));
 	}
 	/*$('#campoArriba').change(function () {
 		evaluarQueEstado(true); // TRUE para decir arriba cambió, false para abajo
