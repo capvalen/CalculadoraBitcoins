@@ -11,7 +11,6 @@
 	<div class="contenedorLabels" style="width: 49%;display: inline-block;margin-left: -3px;">
 		<div id="divTop">
 			<select style="font-size: 20pt;" id="selectMonedas"> <option value="soles">Soles</option>
-				<option value="dolares">Dólares</option>
 			</select>
 		</div>
 		<button id="btnCambiar"><img src="http://www.cambista.com/wp-content/uploads/2018/03/003-refresh-button.svg" style="max-width: 25px;" ></button>
@@ -20,7 +19,6 @@
 				<option value="bitcoin">Bitcoin</option><option value="dolares">Dólares</option><option value="ethereum">Ethereum</option><option value="litecoin">Litecoin</option><option value="ripple">Ripple</option>
 			</select>
 		</div>
-	
 	</div>
 	<div class="resultado" style="background: rgba(62,66,78,.8);color:#fff; width: 98%;"><label>Tipo de cambio usado: <span id="spanTipCambio"></span></label>
 	</div>
@@ -38,7 +36,7 @@ background-color: #fff;position: absolute; right: 1.8rem; margin-top: -20px;
 .contenedorLabels select{color:#fff;width: 100%;border-radius: 0 4px 0 0;background: #283750;height: 67px;border: 1px solid #192231;}
 .contenedorInputs input{border: none;}
 .contenedorInputs input[type=number]::-webkit-outer-spin-button,
-.contenedorInputs input[type=number]::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;} 
+.contenedorInputs input[type=number]::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}
 .contenedorInputs input[type=number] {-moz-appearance:textfield;}
 .contenedorInputs input[type=number]:invalid { box-shadow:none; }
 </style>
@@ -75,7 +73,7 @@ jQuery(document).ready(function($) {
 		if(moneda.id=='bitcoin'){
 		  PreOriBtc =moneda.price_usd;
 		  PreSolBtc = PreOriBtc;
-		 
+
 		  $.JsonMonedas.push({'moneda':'bitcoin', 'precioSol': PreSolBtc, 'precioDol': PreOriBtc , simbolo: 'BTC'});
 		}
 		if(moneda.id=='ethereum'){
@@ -164,9 +162,9 @@ jQuery(document).ready(function($) {
 		  $.JsonMonedas.push({'moneda':'bitcoin-cash', 'precioSol': PreSolBcash, 'precioDol': PreOriBcash , simbolo: 'BCH'});
 		}
 
-		
+
 	  });
-	console.log($.JsonMonedas);
+	//console.log($.JsonMonedas);
 	$('#btnCambiar').addClass('fisico');
 	$('#campoArriba').val(100);
 	evaluarQueEstado(true);
@@ -176,7 +174,7 @@ jQuery(document).ready(function($) {
 	  	$.map($.JsonMonedas, function(moneda, i){
 		if($.JsonMonedas[i].moneda==queMoneda){ //console.log(moneda);
 		   valorAct=$.JsonMonedas[i].precioSol*$.precioDolar;
-			return false; 
+			return false;
 		}
 	  });
 	  return valorAct;
@@ -187,24 +185,24 @@ jQuery(document).ready(function($) {
 		if($.JsonMonedas[i].moneda=='dolares'){ //console.log(moneda);
 			if(esCompra){
 				valorAct=$.JsonMonedas[i].compra;
-				return false; 
+				return false;
 			}else{
 				valorAct=$.JsonMonedas[i].venta;
-				return false; 
+				return false;
 			}
 		}
 	  });
 	  return valorAct;
 	}
-	function evaluarQueEstado(queLado) { 
+	function evaluarQueEstado(queLado) {
 		if( $('#btnCambiar').hasClass('fisico') ){ //Arriba estan las monedas fisicas
 			calculoArriba(queLado);
 		}else{ //monedas digitales
 			calculoAbajo(queLado);
 		}
 	}
-	
-	function calculoArriba(queLado) { 
+
+	function calculoArriba(queLado) {
 		// 1° coger que moneda es
 		var cantidad=0; var comision=0;var cantidad=0, respu=0;
 		if( $.isNumeric($('#campoArriba').val()) ){cantidad=parseFloat($('#campoArriba').val());}
@@ -221,10 +219,10 @@ jQuery(document).ready(function($) {
 			precioMoneda=valorMoneda($('#selectCriptoMonedas').val());
 			comision=1.25;
 		}
-		
+
 		precioMonedaVenta=precioMoneda*comision;
 		var precioMonedaCompra=precioMoneda/comision;
-		
+
 		if(queLado){
 			cantidad=$('#campoArriba').val();
 			respu=parseFloat(cantidad/precioMonedaVenta);
@@ -248,7 +246,7 @@ jQuery(document).ready(function($) {
 		$('#spanPrecioVentaPub').text('S/. '+ parseFloat(precioMonedaVenta).toFixed(3));
 		$('#spanPrecioCompraPub').text('S/. '+ parseFloat(precioMonedaCompra).toFixed(3));
 		$('#spanTipCambio').text(parseFloat(precioMonedaVenta).toFixed(3));
-		
+
 	}
 	function calculoAbajo(queLado) { //console.log('fisico '+$('#btnCambiar').hasClass('fisico')); console.log('lado '+queLado);
 		var cantidad=0; var comision=0;var cantidad=0, respu=0;
@@ -267,14 +265,14 @@ jQuery(document).ready(function($) {
 			precioMoneda=valorMoneda($('#selectCriptoMonedas').val());
 			comision=1.25;
 		}
-		
+
 		precioMonedaVenta=precioMoneda*comision;
 		var precioMonedaCompra=precioMonedaVenta/comision;
 		//console.log('la comi' + comision);
 		if(queLado){
 			cantidad=$('#campoArriba').val();
 			if( $('#selectCriptoMonedas').val()=='dolares' ){
-				respu=parseFloat(precioMonedaCompra/cantidad);
+				respu=parseFloat(cantidad*precioMonedaCompra);
 			}else{
 				respu=parseFloat(precioMonedaCompra*cantidad);
 			}
@@ -282,12 +280,15 @@ jQuery(document).ready(function($) {
 			$('#campoAbajo').val(parseFloat(respu).toFixed(2));
 		}else{
 			cantidad=$('#campoAbajo').val();
+
 			if( $('#selectCriptoMonedas').val()=='dolares' ){
-				respu=parseFloat(precioMonedaCompra/cantidad);
+				respu=parseFloat(cantidad/precioMonedaCompra);
+				$('#campoArriba').val(parseFloat(respu).toFixed(2));
 			}else{
-				respu=parseFloat(precioMonedaCompra*cantidad);
+				respu=parseFloat(cantidad/precioMonedaCompra);
+				$('#campoArriba').val(parseFloat(respu).toFixed(6));
 			}
-			$('#campoArriba').val(parseFloat(respu).toFixed(2));
+
 		}
 		$('#spanMonedaLtr').text($('#selectCriptoMonedas').val());
 		$('#spanPrecioCompraPub').text('S/. '+ parseFloat(precioMonedaCompra).toFixed(3));
@@ -313,11 +314,13 @@ jQuery(document).ready(function($) {
 		evaluarQueEstado(false); // TRUE para decir arriba cambió, false para abajo
 	});*/
 	$('#btnCambiar').click(function () {
+		var estadoAnt = $('#selectCriptoMonedas').val();
 		$('#btnCambiar').toggleClass('fisico');
 		var divArriba= $('#divTop').html();
 		var divAbajo= $('#divBottom').html();
 		$('#divTop').empty().html(divAbajo);
 		$('#divBottom').empty().html(divArriba);
+		$('#selectCriptoMonedas').val(estadoAnt);
 
 		evaluarQueEstado(true);
 	});
