@@ -18,12 +18,12 @@
 		<button id="btnCambiar"><img style="max-width: 45px; margin-top: -6px; margin-left: -11px;" src="http://www.cambista.com/wp-content/uploads/2018/10/boton-cambista.png" /></button>
 		<div id="divBottom">
 			<select id="selectCriptoMonedas" style="font-size: 20pt;">
-				<option value="bitcoin">Bitcoin</option>
 				<option value="dolares">Dólares</option>
-				<option value="ethereum">Ethereum</option>
-				<option value="litecoin">Litecoin</option>
+				<option class="hidden" value="bitcoin">Bitcoin</option>
+				<option class="hidden" value="ethereum">Ethereum</option>
+				<option class="hidden" value="litecoin">Litecoin</option>
 				<option value="soles">Soles</option>
-				<option value="ripple">Ripple</option>
+				<option class="hidden" value="ripple">Ripple</option>
 			</select>
 		</div>
 	</div>
@@ -59,8 +59,12 @@ jQuery(document).ready(function($) {
 	$.get('https://www.deperu.com/api/rest/cotizaciondolar.json', function(dato){
 		$.JsonMonedas.push({'moneda':'dolares', 'compra': dato['Cotizacion'][0].Compra, 'venta': dato['Cotizacion'][0].Venta , simbolo: 'DOL'});
 		$.precioDolar= parseFloat( dato['Cotizacion'][0].Venta );
+		$('#btnCambiar').addClass('fisico');
+		$('#campoArriba').val(100);
+		evaluarQueEstado(true);
+		console.log($.precioDolar);
 	});
-	$.get( "https://api.coinmarketcap.com/v1/ticker/", function(data){
+	/* $.get( "https://api.coinmarketcap.com/v1/ticker/", function(data){
 		   var PreOriBtc, PreSolBtc, PreOriBtcCom, PreSolBtcCom,
 		   PreOriEth, PreSolEth, PreOriEthCom, PreSolEthCom,
 			   PreOriRip, PreSolRip, PreOriRipCom,PreSolRipCom,
@@ -175,10 +179,8 @@ jQuery(document).ready(function($) {
 		
 	  });
 	//console.log($.JsonMonedas);
-	$('#btnCambiar').addClass('fisico');
-	$('#campoArriba').val(100);
-	evaluarQueEstado(true);
-	});// Fin de GET
+});// Fin de GET */
+
 
 	$('#selectMonedas').change(function() {
 		if( $(this).val()=='dolares' ){
